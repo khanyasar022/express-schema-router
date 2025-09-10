@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'supertest';
 import { z } from 'zod';
-import { defineRoutes, schemaRouter } from '../src/index';
+import { defineRoutes, schemaRouter } from '../src/index.js';
 
 describe('express-schema-router', () => {
   const app = express();
@@ -10,19 +10,19 @@ describe('express-schema-router', () => {
   const routes = defineRoutes({
     'POST /users': {
       body: z.object({ name: z.string(), email: z.string().email() }),
-      handler: (req, res) => {
+      handler: (req: express.Request, res: express.Response) => {
         res.json({ user: req.body });
       },
     },
     'GET /search': {
       query: z.object({ q: z.string() }),
-      handler: (req, res) => {
+      handler: (req: express.Request, res: express.Response) => {
         res.json({ q: res.locals.validatedQuery.q });
       },
     },
     'GET /users/:id': {
       params: z.object({ id: z.string().regex(/^\d+$/) }),
-      handler: (req, res) => {
+      handler: (req: express.Request, res: express.Response) => {
         res.json({ id: req.params.id });
       },
     },
@@ -48,7 +48,6 @@ describe('express-schema-router', () => {
 
   it('should handle query validation', async () => {
     const res = await request(app).get('/search?q=hello');
-    console.log('QUERY TEST RESPONSE:', res.body);
     expect(res.status).toBe(200);
     expect(res.body.q).toBe('hello');
   });
