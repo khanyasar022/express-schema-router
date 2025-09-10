@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/npm/v/express-schema-router.svg)](https://www.npmjs.com/package/express-schema-router)
+
 # express-schema-router
 
 A schema-first router for Express.js that lets you define routes and validation in one place using Zod, reducing boilerplate and improving maintainability.
